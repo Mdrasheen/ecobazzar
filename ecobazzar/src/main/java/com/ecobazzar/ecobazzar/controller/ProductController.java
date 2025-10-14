@@ -15,42 +15,82 @@ import com.ecobazzar.ecobazzar.model.Product;
 import com.ecobazzar.ecobazzar.service.ProductService;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
-	
-	private final ProductService productService;
-	
-	public ProductController(ProductService productService) {
-		this.productService = productService;
-	}
-	
-	@PostMapping
-	public Product addProduct(@RequestBody Product product) {
-		return productService.createProduct(product);
-	}
-	
-	@GetMapping
-	public List<Product> listAllProducts(){
-		return productService.getAllProducts();
-	}
-	
-	@PutMapping("/{id}")
-	public Product updateProductDetails(@PathVariable Long id, @RequestBody Product product) {
-		return productService.updateProductDetails(id, product);
-	}
 
-	@DeleteMapping("/{id}")
-	public void deleteProductDetails(@PathVariable Long id) {
-		productService.deleteProductDetails(id);
-	}
-	
-	@GetMapping("/eco")
-	public List<Product> getEcoCertified(){
-		return productService.getEcoCertifiedProducts();
-	}
-	
-	@GetMapping("/eco/sorted")
-	public List<Product> getEcoCertifiedSorted(){
-		return productService.getEcoCertifiedSortedByCarbonImpact();
-	}
+@RequestMapping("/products")
+
+public class ProductController {
+
+
+private final ProductService productService;
+@GetMapping("/eco")
+
+public List<Product> getEcoCertified() {
+
+return productService.getEcoCertifiedProducts();
+
+}
+
+
+// New API 2: Get eco-certified products sorted by carbon impact
+
+@GetMapping("/eco/sorted")
+
+public List<Product> getEcoCertifiedSorted() {
+
+return productService.getEcoCertifiedSortedByCarbonImpact();
+
+}
+
+
+// Constructor injection
+
+public ProductController(ProductService productService) {
+
+this.productService = productService;
+
+}
+
+
+// POST /products → add
+
+@PostMapping
+
+public Product addProduct(@RequestBody Product product) {
+
+return productService.addProduct(product);
+
+}
+
+
+// GET /products → list
+
+@GetMapping
+public List<Product> getAllProducts() {
+
+return productService.getAllProducts();
+
+}
+
+
+// PUT /products/{id} → update
+
+@PutMapping("/{id}")
+
+public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+
+return productService.updateProduct(id, product);
+
+}
+
+
+// DELETE /products/{id} → delete
+
+@DeleteMapping("/{id}")
+
+public void deleteProduct(@PathVariable Long id) {
+
+productService.deleteProduct(id);
+
+}
+
 }
