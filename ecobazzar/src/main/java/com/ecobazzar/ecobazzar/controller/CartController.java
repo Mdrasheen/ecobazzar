@@ -1,8 +1,8 @@
 package com.ecobazzar.ecobazzar.controller;
 
 import com.ecobazzar.ecobazzar.model.CartItem;
+import com.ecobazzar.ecobazzar.dto.CartSummaryDTO;
 import com.ecobazzar.ecobazzar.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -36,13 +36,11 @@ return cartService.addToCart(cartItem);
 //View all cart items for a user
 
 @GetMapping("/{userId}")
+public CartSummaryDTO getCartSummary(@PathVariable Long userId) {
 
-public List<CartItem> getCart(@PathVariable Long userId) {
-
-return cartService.getCartByUserId(userId);
+return cartService.getCartSummary(userId);
 
 }
-
 
 //Delete item from cart
 

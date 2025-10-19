@@ -79,5 +79,9 @@ public void setEcoCertified(Boolean ecoCertified) { this.ecoCertified = ecoCerti
 public Long getSellerId() { return sellerId; }
 
 public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
+public boolean isEcoCertified() {
+	// TODO Auto-generated method stub
+	return false;
+}
 
 }
