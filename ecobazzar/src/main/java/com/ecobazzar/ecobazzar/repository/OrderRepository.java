@@ -1,4 +1,4 @@
-package com.ecobazzar.ecobazzar.repository;
+	package com.ecobazzar.ecobazzar.repository;
 
 import java.util.List;
 
