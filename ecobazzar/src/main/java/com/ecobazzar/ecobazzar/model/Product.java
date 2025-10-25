@@ -19,17 +19,16 @@ private Double price;
 
 
 private Double carbonImpact;
+@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 
+private Boolean ecoCertified = false;
 
-private Boolean ecoCertified;
 
 
 private Long sellerId; 
 
 public Product() {}
-public Product(Long id, String name, String details, Double price,
-
-Double carbonImpact, Boolean ecoCertified, Long sellerId) {
+public Product(Long id, String name, String details, Double price,Double carbonImpact, Boolean ecoCertified, Long sellerId) {
 
 this.id = id;
 
@@ -79,9 +78,7 @@ public void setEcoCertified(Boolean ecoCertified) { this.ecoCertified = ecoCerti
 public Long getSellerId() { return sellerId; }
 
 public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
-public boolean isEcoCertified() {
-	// TODO Auto-generated method stub
-	return false;
-}
+
+
 
 }

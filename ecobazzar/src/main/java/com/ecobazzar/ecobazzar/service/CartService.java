@@ -61,7 +61,7 @@ totalCarbon += product.getCarbonImpact() * item.getQuantity();
 
 //Eco-friendly suggestion
 
-if (!product.isEcoCertified()) {
+if (!product.getEcoCertified()) {
 
 Optional<Product> ecoAlt = productRepository.findFirstByNameContainingAndEcoCertifiedTrue(product.getName().split(" ")[0]);
 if (ecoAlt.isPresent()) {
