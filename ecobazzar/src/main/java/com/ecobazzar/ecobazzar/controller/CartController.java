@@ -1,57 +1,54 @@
 package com.ecobazzar.ecobazzar.controller;
 
-import com.ecobazzar.ecobazzar.model.CartItem;
-import com.ecobazzar.ecobazzar.dto.CartSummaryDTO;
-import com.ecobazzar.ecobazzar.service.CartService;
-import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import com.ecobazzar.ecobazzar.dto.CartSummaryDto;
+import com.ecobazzar.ecobazzar.model.CartItem;
+import com.ecobazzar.ecobazzar.model.User;
+import com.ecobazzar.ecobazzar.repository.UserRepository;
+import com.ecobazzar.ecobazzar.service.CartService;
+
 @RestController
-
 @RequestMapping("/api/cart")
-
 public class CartController {
 
+    private final CartService cartService;
+    private final UserRepository userRepository;
 
-private final CartService cartService; // dependency declared as final
+    public CartController(CartService cartService, UserRepository userRepository) {
+        this.cartService = cartService;
+        this.userRepository = userRepository;
+    }
 
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping
+    public CartItem addToCart(@RequestBody CartItem cartItem) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User currentUser = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        cartItem.setUserId(currentUser.getId());
+        return cartService.addToCart(cartItem);
+    }
 
-// Constructor injection — no @Autowired needed
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping
+    public CartSummaryDto getCartSummary() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User currentUser = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        return cartService.getCartSummary(currentUser.getId());
+    }
 
-public CartController(CartService cartService) {
-
-this.cartService = cartService;
-
-}
-//Add item to cart
-
-@PostMapping
-
-public CartItem addToCart(@RequestBody CartItem cartItem) {
-
-return cartService.addToCart(cartItem);
-
-}
-
-
-//View all cart items for a user
-
-@GetMapping("/{userId}")
-public CartSummaryDTO getCartSummary(@PathVariable Long userId) {
-
-return cartService.getCartSummary(userId);
-
-}
-
-//Delete item from cart
-
-@DeleteMapping("/{id}")
-
-public String removeFromCart(@PathVariable Long id) {
-
-cartService.removeFromCart(id);
-
-return "Item removed from cart!";
-
-}
-
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/{id}")
+    public String removeFromCart(@PathVariable Long id) {
+        cartService.removeFromCart(id);
+        return "Item Removed from Cart!";
+    }
 }

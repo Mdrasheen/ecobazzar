@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.ecobazzar.ecobazzar.model.CartItem;
 
-public class CartSummaryDTO {
-private List<CartItem> items;
+public class CartSummaryDto {
+
+	private List<CartItem> items;
 	
 	private double totalPrice;
 	
@@ -13,8 +14,10 @@ private List<CartItem> items;
 	
 	private String ecoSuggestion;
 	
-	public CartSummaryDTO() {}
-	public CartSummaryDTO(List<CartItem> items, double totalPrice, double totalCarbon, String ecoSuggestion) {
+	public CartSummaryDto() {}
+	
+
+	public CartSummaryDto(List<CartItem> items, double totalPrice, double totalCarbon, String ecoSuggestion) {
 		super();
 		this.items = items;
 		this.totalPrice = totalPrice;
@@ -52,5 +55,5 @@ private List<CartItem> items;
 
 	public void setEcoSuggestion(String ecoSuggestion) {
 		this.ecoSuggestion = ecoSuggestion;
-	}
+	}	
 }

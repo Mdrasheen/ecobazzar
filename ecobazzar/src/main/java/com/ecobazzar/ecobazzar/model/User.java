@@ -89,9 +89,4 @@ public class User {
 	public void setEcoScore(Integer ecoScore) {
 		this.ecoScore = ecoScore;
 	}
-
-	
-	
-	
-
 }
